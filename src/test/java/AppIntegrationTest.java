@@ -3,6 +3,7 @@ import org.junit.ClassRule;
 import org.junit.Test;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.htmlunit.HtmlUnitDriver;
+import static org.fluentlenium.core.filter.FilterConstructor.*;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -15,16 +16,39 @@ public class AppIntegrationTest extends FluentTest {
   @ClassRule
   public static ServerRule server = new ServerRule();
 
-  // @Test
-  // public void rootTest() {
-  //     goTo("http://localhost:4567/");
-  //     assertThat(pageSource()).contains("Text on page");
-  // }
-  // @Test
-  // public void isALeapYear() {
-  //   goTo("http://localhost:4567");
-  //   fill("#year").with("2004");
-  //   submit(".btn");
-  //   assertThat(pageSource()).contains("Correct response");
-  // }
+  @Test
+  public void rootTest() {
+      goTo("http://localhost:4567/");
+      assertThat(pageSource()).contains("Task list!");
+  }
+
+  @Test
+  public void taskIsCreatedTest() {
+    goTo("http://localhost:4567/");
+    fill("#description").with("Mow the lawn");
+    submit(".btn");
+    assertThat(pageSource()).contains("Your task has been saved.");
+  }
+
+  @Test
+  public void taskIsDisplayed() {
+    goTo("http://localhost:4567/");
+    fill("#description").with("Mow the lawn");
+    submit(".btn");
+    click("a", withText("Go Back"));
+    assertThat(pageSource()).contains("Mow the lawn");
+  }
+
+  @Test
+  public void multipleTasksAreDisplayed() {
+    goTo("http://localhost:4567/");
+    fill("#description").with("Mow the lawn");
+    submit(".btn");
+    click("a", withText("Go Back"));
+    fill("#description").with("Buy groceries");
+    submit(".btn");
+    click("a", withText("Go Back"));
+    assertThat(pageSource()).contains("Mow the lawn");
+    assertThat(pageSource()).contains("Buy groceries");
+  }
 }

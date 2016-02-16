@@ -1,6 +1,6 @@
 import org.junit.*;
 import static org.junit.Assert.*;
-
+import java.util.ArrayList;
 public class AppTest {
 
   @Test
@@ -12,6 +12,7 @@ public class AppTest {
   @Test
   public void task_instantiatesWithdescription_true() {
     Task taskApp = new Task("Mow the lawn");
-    assertEquals("Mow the lawn", myTask.getDescription());
+    assertEquals("Mow the lawn", taskApp.getDescription());
   }
+
 }

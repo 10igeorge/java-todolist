@@ -5,9 +5,6 @@ import static org.junit.Assert.*;
 
 public class TaskTest {
 
-  @Rule
-public ClearRule clearRule = new ClearRule();
-
   @Test
   public void task_instantiatesCorrectly_true() {
     Task myTask = new Task("Mow the lawn");
